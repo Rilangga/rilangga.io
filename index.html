@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Menarik</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        #quiz-container {
+            margin-top: 20px;
+        }
+
+        .question {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 1em;
+            cursor: pointer;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Selamat datang di Kuis Rilangga</h1>
+
+<div id="quiz-container">
+    <div class="question" id="question">Pertanyaan akan muncul di sini.</div>
+    <div class="options" id="options"></div>
+    <button onclick="nextQuestion()">Selanjutnya</button>
+</div>
+
+<script>
+    const questions = [
+        {
+            question: 'Ingga suka makan apa',
+            options: ['ndog', 'baso', 'ayam', 'Mie ayam'],
+            correctAnswer: ' SEBENERNYA INGGA SUKA MAKAN ORANG'
+        },
+        {
+            question: 'Aku terbuat dari apa',
+            options: ['nasi', 'cireng', 'sperma', 'haha'],
+            correctAnswer: 'sperma'
+        },
+        {
+            question: 'apakah kamu tau kesukaan ingga?',
+            options: ['makan', 'Ewean', 'Kamu', 'mie ayam'],
+            correctAnswer: 'mie ayam'
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+
+    function displayQuestion() {
+        const questionElement = document.getElementById('question');
+        const optionsContainer = document.getElementById('options');
+        const currentQuestion = questions[currentQuestionIndex];
+
+        questionElement.textContent = currentQuestion.question;
+
+        optionsContainer.innerHTML = '';
+        currentQuestion.options.forEach(option => {
+            const button = document.createElement('button');
+            button.textContent = option;
+            button.addEventListener('click', () => checkAnswer(option));
+            optionsContainer.appendChild(button);
+        });
+    }
+
+    function checkAnswer(userAnswer) {
+        const currentQuestion = questions[currentQuestionIndex];
+
+        if (userAnswer === currentQuestion.correctAnswer) {
+            alert('Jawaban kamu benar!');
+        } else {
+            alert('Maaf, jawaban kamu salah. Jawabannya adalah ' + currentQuestion.correctAnswer);
+        }
+
+        // Pindah ke pertanyaan berikutnya
+        currentQuestionIndex++;
+
+        // Periksa apakah masih ada pertanyaan
+        if (currentQuestionIndex < questions.length) {
+            displayQuestion();
+        } else {
+            alert('Kuis selesai dah semoga harimu menyenangkan !');
+            resetQuiz();
+        }
+    }
+
+    function resetQuiz() {
+        currentQuestionIndex = 0;
+        displayQuestion();
+    }
+
+    function nextQuestion() {
+        // Pindah ke pertanyaan berikutnya
+        currentQuestionIndex++;
+
+        // Periksa apakah masih ada pertanyaan
+        if (currentQuestionIndex < questions.length) {
+            displayQuestion();
+        } else {
+            alert('Kuis selesai dah semoga hari mu menyenangkan!');
+            resetQuiz();
+        }
+    }
+
+    // Tampilkan pertanyaan pertama saat halaman dimuat
+    displayQuestion();
+</script>
+
+</body>
+</html>
